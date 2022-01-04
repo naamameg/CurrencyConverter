@@ -1,13 +1,15 @@
+package UserInput;
+
 public class CheckValidInput {
 
-    protected static boolean checkCoinOption(String answer){
+    protected static boolean checkCoinOption(String answer){//Checks is the answer fits the term of the question.
         int number = 0;
         try {
             number = Integer.parseInt(answer);
         } catch (NumberFormatException e) {
             return false;
         }
-        if(number > 2){
+        if(number > 3){
             return false;
         }
 
@@ -19,11 +21,11 @@ public class CheckValidInput {
 
     }
 
-    protected static boolean checkChooseAgain(String answer) {
+    protected static boolean checkChooseAgain(String answer) {//Checks is the answer fits the term of the question.
         return answer.equals("y") || answer.equals("n");
     }
 
-    protected static boolean checkAmount(String answer){
+    protected static boolean checkAmount(String answer){//Checks is the answer fits the term of the question.
         double number = 0;
 
         try {

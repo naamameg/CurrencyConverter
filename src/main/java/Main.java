@@ -1,3 +1,6 @@
+import Coins.*;
+import UserInput.*;
+import Results.Results;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -5,29 +8,36 @@ import java.util.*;
 
 public class Main {
 
-    static ILS ils = (ILS) CoinFactory.getCoin();
-    static USD usd = (USD) CoinFactory.getCoin();
+    static ILS ils = (ILS) CoinFactory.getCoin("ils");
+    static USD usd = (USD) CoinFactory.getCoin("usd");
+    static EUR eur = (EUR) CoinFactory.getCoin("eur");
 
-    public static double converter(int choice, double input) {
+    public static Results converter(Coins choice, double input){//Converts the amount the user chose between coin types.
+        Results results;
+        switch (choice){
+            case ILS:
+            results = new Results(Coins.USD, input, Coins.ILS, ils.calculate(input));
+            return results;
+        case USD:
+            results = new Results(Coins.ILS, input, Coins.USD, usd.calculate(input));
+            return results;
+        case EUR:
+            results = new Results(Coins.ILS, input, Coins.EUR, eur.calculate(input));
+            return results;
 
-        double convertedCoin = 0;
-        if (choice == 1) {
-            convertedCoin = ils.calculate(input);
-        } else if (choice == 2) {
-            convertedCoin = usd.calculate(input);
-        }
-        return convertedCoin;
+
     }
-
+        throw (new IllegalArgumentException());
+    }
 
     public static void main(String[] args) throws IOException {
 
-        List <Double> resultsList = new ArrayList<>();
+        List <Results> resultsList = new ArrayList<>();
 
         WelcomeScreen.Welcome();
 
         do {
-            double result = converter(WelcomeScreen.chooseCoin(), WelcomeScreen.chooseAmount());
+            Results result = converter(WelcomeScreen.chooseCoin(), WelcomeScreen.chooseAmount());
             System.out.println(result);
             resultsList.add(result);
 
@@ -40,10 +50,6 @@ public class Main {
         System.out.println("This is a list of all your converted amounts:\n" +
                 resultsList);
     }
-
-
-
-
 
     }
 
